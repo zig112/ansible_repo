@@ -4,19 +4,20 @@
   become: true
   tasks:
   
-  - name: update inventory index
+  - name: install apache2 and php packages
     yum:
-       update_cache: yes
-    when: ansible_distribution == "CentOS"
- 
-  - name: install apache2 package
-    yum:
-      name: httpd
+      name: 
+        - httpd
+        - php-fpm
       state: latest
+      update_cache: yes
     when: ansible_distribution == "CentOS"
 
-  - name: add php support for apache
-    yum:
-       name: php-fpm
-       state: latest
-    when: ansible_distribution in ["Ubuntu", "CentOS"]
+  - name: install apache2 and php packages
+    apt:
+      name:
+        - apache2
+        - libapache2-mod-php
+      state: latest
+      update_cache: yes
+    when: ansible_distribution == "Ubuntu"
