@@ -7,13 +7,16 @@
   - name: update inventory index
     yum:
        update_cache: yes
-
+    when: ansible_distribution == "CentOS"
+ 
   - name: install apache2 package
     yum:
       name: httpd
       state: latest
+    when: ansible_distribution == "CentOS"
 
   - name: add php support for apache
     yum:
        name: php-fpm
        state: latest
+    when: ansible_distribution in ["Ubuntu", "CentOS"]
